@@ -1,7 +1,10 @@
 from datetime import datetime
 from flask_wtf import Form
-from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField
-from wtforms.validators import DataRequired, AnyOf, URL
+from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField, ValidationError
+from wtforms.validators import DataRequired, AnyOf, URL, Length, Optional
+import re
+
+
 
 class ShowForm(Form):
     artist_id = StringField(
@@ -25,7 +28,8 @@ class VenueForm(Form):
     )
     state = SelectField(
         'state', validators=[DataRequired()],
-        choices=[
+    )
+    state_choices=[
             ('AL', 'AL'),
             ('AK', 'AK'),
             ('AZ', 'AZ'),
@@ -78,7 +82,31 @@ class VenueForm(Form):
             ('WI', 'WI'),
             ('WY', 'WY'),
         ]
-    )
+
+
+    genres_choices = [
+    ('Alternative', 'Alternative'),
+    ('Blues', 'Blues'),
+    ('Classical', 'Classical'),
+    ('Country', 'Country'),
+    ('Electronic', 'Electronic'),
+    ('Folk', 'Folk'),
+    ('Funk', 'Funk'),
+    ('Hip-Hop', 'Hip-Hop'),
+    ('Heavy Metal', 'Heavy Metal'),
+    ('Instrumental', 'Instrumental'),
+    ('Jazz', 'Jazz'),
+    ('Musical Theatre', 'Musical Theatre'),
+    ('Pop', 'Pop'),
+    ('Punk', 'Punk'),
+    ('R&B', 'R&B'),
+    ('Reggae', 'Reggae'),
+    ('Rock n Roll', 'Rock n Roll'),
+    ('Soul', 'Soul'),
+    ('Other', 'Other'),
+]
+    
+
     address = StringField(
         'address', validators=[DataRequired()]
     )
@@ -91,40 +119,38 @@ class VenueForm(Form):
     genres = SelectMultipleField(
         # TODO implement enum restriction
         'genres', validators=[DataRequired()],
-        choices=[
-            ('Alternative', 'Alternative'),
-            ('Blues', 'Blues'),
-            ('Classical', 'Classical'),
-            ('Country', 'Country'),
-            ('Electronic', 'Electronic'),
-            ('Folk', 'Folk'),
-            ('Funk', 'Funk'),
-            ('Hip-Hop', 'Hip-Hop'),
-            ('Heavy Metal', 'Heavy Metal'),
-            ('Instrumental', 'Instrumental'),
-            ('Jazz', 'Jazz'),
-            ('Musical Theatre', 'Musical Theatre'),
-            ('Pop', 'Pop'),
-            ('Punk', 'Punk'),
-            ('R&B', 'R&B'),
-            ('Reggae', 'Reggae'),
-            ('Rock n Roll', 'Rock n Roll'),
-            ('Soul', 'Soul'),
-            ('Other', 'Other'),
-        ]
+        choices = genres_choices)
+
+       
+    address = StringField(
+        'address', validators=[DataRequired(), Length(max=120)]
+    )
+    city = StringField(
+        'city', validators=[DataRequired(), Length(max=120)]
+    )
+    state = SelectField(
+        'state', validators=[DataRequired(), Length(max=120)],
+        choices = state_choices
+    )
+    phone = StringField(
+        'phone', validators=[DataRequired()]
+    )
+    web_site = StringField(
+        'web_site', validators=[DataRequired(), URL(), Length(max=120)]
+    )
+    image_link = StringField(
+        'image_link', validators=[DataRequired(), URL(), Length(max=500)]
+    )
+    search_talent = BooleanField(
+        'search_talent'
     )
     facebook_link = StringField(
-        'facebook_link', validators=[URL()]
+        'facebook_link', validators=[DataRequired(), URL()]
     )
-    website_link = StringField(
-        'website_link'
+    search_description = StringField(
+        'search_description', validators=[Length(max=500)]
     )
-
-    seeking_talent = BooleanField( 'seeking_talent' )
-
-    seeking_description = StringField(
-        'seeking_description'
-    )
+    
 
 
 
@@ -193,8 +219,11 @@ class ArtistForm(Form):
     )
     phone = StringField(
         # TODO implement validation logic for phone 
-        'phone'
+        'phone', validators=[DataRequired()]
     )
+    def validate_phone(form, field):
+        if not re.search(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$", field.data):
+            raise ValidationError("Invalid phone number.")
     image_link = StringField(
         'image_link'
     )
@@ -227,13 +256,17 @@ class ArtistForm(Form):
         'facebook_link', validators=[URL()]
      )
 
-    website_link = StringField(
-        'website_link'
-     )
-
-    seeking_venue = BooleanField( 'seeking_venue' )
-
-    seeking_description = StringField(
-            'seeking_description'
-     )
+    web_site = StringField(
+        'web_site', validators=[URL()]
+    )
+    search_venue = SelectField(
+        'search_venue', validators=[DataRequired()],
+        choices=[
+            ('No','No'),
+            ('Yes','Yes')
+        ]
+    )
+    search_description= StringField(
+        'search_description', validators=[Optional()]
+    )
 
