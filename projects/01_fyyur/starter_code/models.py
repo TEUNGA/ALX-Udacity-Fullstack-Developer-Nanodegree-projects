@@ -2,24 +2,13 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-from sqlalchemy import Column, String, Integer, Boolean, DateTime, ARRAY, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import json
-import dateutil.parser
-import babel
-from flask import Flask, render_template, request, Response, flash, redirect, url_for
+from flask import Flask
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
-import logging
-from logging import Formatter, FileHandler
-from flask_wtf import Form
-from forms import *
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, ARRAY, ForeignKey
 
-
-# TODO: connect to a local postgresql database
-# connecting to local postgresql
 app = Flask(__name__)
 moment = Moment(app)
 app.config.from_object('config')

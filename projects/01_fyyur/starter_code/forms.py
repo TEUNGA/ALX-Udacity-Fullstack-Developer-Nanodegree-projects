@@ -1,8 +1,12 @@
-from datetime import datetime
+#----------------------------------------------------------------------------#
+# Imports
+#----------------------------------------------------------------------------#
+
 from flask_wtf import Form
 from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField, ValidationError
-from wtforms.validators import DataRequired, AnyOf, URL, Length, Optional
+from wtforms.validators import DataRequired, URL, Length, Optional
 import re
+from datetime import datetime
 
 
 
