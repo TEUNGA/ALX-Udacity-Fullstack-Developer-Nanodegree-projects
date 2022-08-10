@@ -27,64 +27,68 @@ class VenueForm(Form):
         'city', validators=[DataRequired()]
     )
     state = SelectField(
-        'state', validators=[DataRequired()],
+        'state', validators=[DataRequired(), Length(max=120)],
+         choices = [
+    ('AL', 'AL'),
+    ('AK', 'AK'),
+    ('AZ', 'AZ'),
+    ('AR', 'AR'),
+    ('CA', 'CA'),
+    ('CO', 'CO'),
+    ('CT', 'CT'),
+    ('DE', 'DE'),
+    ('DC', 'DC'),
+    ('FL', 'FL'),
+    ('GA', 'GA'),
+    ('HI', 'HI'),
+    ('ID', 'ID'),
+    ('IL', 'IL'),
+    ('IN', 'IN'),
+    ('IA', 'IA'),
+    ('KS', 'KS'),
+    ('KY', 'KY'),
+    ('LA', 'LA'),
+    ('ME', 'ME'),
+    ('MT', 'MT'),
+    ('NE', 'NE'),
+    ('NV', 'NV'),
+    ('NH', 'NH'),
+    ('NJ', 'NJ'),
+    ('NM', 'NM'),
+    ('NY', 'NY'),
+    ('NC', 'NC'),
+    ('ND', 'ND'),
+    ('OH', 'OH'),
+    ('OK', 'OK'),
+    ('OR', 'OR'),
+    ('MD', 'MD'),
+    ('MA', 'MA'),
+    ('MI', 'MI'),
+    ('MN', 'MN'),
+    ('MS', 'MS'),
+    ('MO', 'MO'),
+    ('PA', 'PA'),
+    ('RI', 'RI'),
+    ('SC', 'SC'),
+    ('SD', 'SD'),
+    ('TN', 'TN'),
+    ('TX', 'TX'),
+    ('UT', 'UT'),
+    ('VT', 'VT'),
+    ('VA', 'VA'),
+    ('WA', 'WA'),
+    ('WV', 'WV'),
+    ('WI', 'WI'),
+    ('WY', 'WY'),
+]
+
     )
-    state_choices=[
-            ('AL', 'AL'),
-            ('AK', 'AK'),
-            ('AZ', 'AZ'),
-            ('AR', 'AR'),
-            ('CA', 'CA'),
-            ('CO', 'CO'),
-            ('CT', 'CT'),
-            ('DE', 'DE'),
-            ('DC', 'DC'),
-            ('FL', 'FL'),
-            ('GA', 'GA'),
-            ('HI', 'HI'),
-            ('ID', 'ID'),
-            ('IL', 'IL'),
-            ('IN', 'IN'),
-            ('IA', 'IA'),
-            ('KS', 'KS'),
-            ('KY', 'KY'),
-            ('LA', 'LA'),
-            ('ME', 'ME'),
-            ('MT', 'MT'),
-            ('NE', 'NE'),
-            ('NV', 'NV'),
-            ('NH', 'NH'),
-            ('NJ', 'NJ'),
-            ('NM', 'NM'),
-            ('NY', 'NY'),
-            ('NC', 'NC'),
-            ('ND', 'ND'),
-            ('OH', 'OH'),
-            ('OK', 'OK'),
-            ('OR', 'OR'),
-            ('MD', 'MD'),
-            ('MA', 'MA'),
-            ('MI', 'MI'),
-            ('MN', 'MN'),
-            ('MS', 'MS'),
-            ('MO', 'MO'),
-            ('PA', 'PA'),
-            ('RI', 'RI'),
-            ('SC', 'SC'),
-            ('SD', 'SD'),
-            ('TN', 'TN'),
-            ('TX', 'TX'),
-            ('UT', 'UT'),
-            ('VT', 'VT'),
-            ('VA', 'VA'),
-            ('WA', 'WA'),
-            ('WV', 'WV'),
-            ('WI', 'WI'),
-            ('WY', 'WY'),
-        ]
 
-
-    genres_choices = [
+    
+    genres = SelectMultipleField(
+        # TODO implement enum restriction
+        'genres', validators=[DataRequired()],
+        choices = [
     ('Alternative', 'Alternative'),
     ('Blues', 'Blues'),
     ('Classical', 'Classical'),
@@ -104,22 +108,7 @@ class VenueForm(Form):
     ('Rock n Roll', 'Rock n Roll'),
     ('Soul', 'Soul'),
     ('Other', 'Other'),
-]
-    
-
-    address = StringField(
-        'address', validators=[DataRequired()]
-    )
-    phone = StringField(
-        'phone'
-    )
-    image_link = StringField(
-        'image_link'
-    )
-    genres = SelectMultipleField(
-        # TODO implement enum restriction
-        'genres', validators=[DataRequired()],
-        choices = genres_choices)
+])
 
        
     address = StringField(
@@ -128,28 +117,28 @@ class VenueForm(Form):
     city = StringField(
         'city', validators=[DataRequired(), Length(max=120)]
     )
-    state = SelectField(
-        'state', validators=[DataRequired(), Length(max=120)],
-        choices = state_choices
-    )
+   
     phone = StringField(
         'phone', validators=[DataRequired()]
-    )
-    web_site = StringField(
-        'web_site', validators=[DataRequired(), URL(), Length(max=120)]
     )
     image_link = StringField(
         'image_link', validators=[DataRequired(), URL(), Length(max=500)]
     )
-    search_talent = BooleanField(
-        'search_talent'
+    website_link = StringField(
+        'website_link', validators=[DataRequired(), URL(), Length(max=120)]
+    )
+   
+    seeking_talent = BooleanField(
+        'seeking_talent'
+    )
+
+    seeking_description = StringField(
+        'seeking_description', validators=[Length(max=500)]
     )
     facebook_link = StringField(
         'facebook_link', validators=[DataRequired(), URL()]
     )
-    search_description = StringField(
-        'search_description', validators=[Length(max=500)]
-    )
+   
     
 
 
@@ -256,17 +245,17 @@ class ArtistForm(Form):
         'facebook_link', validators=[URL()]
      )
 
-    web_site = StringField(
-        'web_site', validators=[URL()]
+    website_link = StringField(
+        'website_link', validators=[URL()]
     )
-    search_venue = SelectField(
-        'search_venue', validators=[DataRequired()],
+    seeking_venue = SelectField(
+        'seeking_venue', validators=[DataRequired()],
         choices=[
             ('No','No'),
             ('Yes','Yes')
         ]
     )
-    search_description= StringField(
-        'search_description', validators=[Optional()]
+    seeking_description= StringField(
+        'seeking_description', validators=[Optional()]
     )
 
