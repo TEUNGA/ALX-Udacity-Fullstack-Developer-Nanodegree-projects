@@ -47,7 +47,7 @@ def create_app(test_config=None):
     for all available categories.
     '''
     # Create an endpoint to handle GET requests for all available categories.
-    @app.route('/categories', methods=['GET'])
+    @app.route('/get_categories', methods=['GET'])
     def get_categories():
             selection = Category.query.order_by(Category.id).all()
             current_categories = paginate_questions(request, selection)

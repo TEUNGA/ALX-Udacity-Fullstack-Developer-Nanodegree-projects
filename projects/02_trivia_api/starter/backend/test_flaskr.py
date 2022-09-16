@@ -66,7 +66,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Resource Not Found')
 
     def test_get_categories(self):
-        res = self.client().get('/categories')
+        res = self.client().get('/get_categories')
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
