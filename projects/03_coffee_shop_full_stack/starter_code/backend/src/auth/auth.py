@@ -7,7 +7,7 @@ from urllib.request import urlopen
 
 AUTH0_DOMAIN = 'dev-0s6akm4i.us.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'https://dev-0s6akm4i.us.auth0.com/api/v2/'
+API_AUDIENCE = 'aimedjobia'
 
 ## AuthError Exception
 '''
@@ -135,7 +135,7 @@ def verify_decode_jwt(token):
                 token,
                 rsa_key,
                 algorithms=ALGORITHMS,
-                audience='dev-0s6akm4i.us.auth0.com/api/v2/',
+                audience='aimedjobia',
                 issuer='https://' + AUTH0_DOMAIN + '/'
             )
 

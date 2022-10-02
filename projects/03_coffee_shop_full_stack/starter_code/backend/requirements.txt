@@ -10,9 +10,9 @@ Jinja2
 lazy-object-proxy
 MarkupSafe
 mccabe
-# pycryptodome
+pycryptodome
 pylint
-# python-jose-cryptodome
+python-jose-cryptodome
 six
 typed-ast
 Werkzeug
